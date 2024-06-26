@@ -11,7 +11,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "../styles/featuredalbums.css";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "../../feelit/firebaseConfig";
+import { db } from "../firebaseConfig";
 
 const FeaturedAlbums = () => {
   const [musicArray, setMusicArray] = useState([]);

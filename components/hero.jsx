@@ -1,7 +1,8 @@
 // Main container wrapper 1170px d31448
 import Container from "./container";
 import Image from "next/image";
-import "../../feelit/app/home-2/styles/styles.css";
+ import "../app/home-2/styles/styles.css";
+;
 
 //method call
 const Hero = () => {
