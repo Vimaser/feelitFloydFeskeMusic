@@ -1,0 +1,18 @@
+/*
+TemplatName : feeilt
+author: nsstheme
+*/
+
+/* Styles for embla-carousel  */
+.embla_testimonial {
+  @apply overflow-hidden;
+}
+.embla__container_testimonial {
+  display: flex;
+  @apply flex-1;
+}
+.embla__slide_testimonial {
+  flex: 0 0 100%;
+  min-width: 0;
+  width: 100%;
+}

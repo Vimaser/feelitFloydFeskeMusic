@@ -1,0 +1,12 @@
+/* Styles for embla-carousel  */
+.embla_albums {
+  overflow: hidden;
+}
+.embla__container_albums {
+  display: flex;
+}
+.embla__slide_albums {
+  flex: 0 0 100%;
+  min-width: 0;
+  flex-basis: 376px;
+}

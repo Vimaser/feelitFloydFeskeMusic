@@ -1,0 +1,33 @@
+/*
+TemplatName : feeilt
+author: nsstheme
+*/
+
+.rhap_container {
+  @apply bg-transparent;
+}
+.rhap_progress-bar.rhap_progress-bar-show-download {
+  @apply bg-light-dark;
+}
+.rhap_progress-filled,
+.rhap_volume-bar {
+  @apply bg-rose;
+}
+.rhap_download-progress {
+  @apply bg-cyan;
+}
+.rhap_main-controls {
+  @apply text-rose;
+}
+.rhap_main-controls-button,
+.rhap_button-clear.rhap_volume-button {
+  @apply text-rose;
+}
+.rhap_time.rhap_total-time,
+.rhap_current-time {
+  @apply text-white;
+}
+.rhap_volume-indicator,
+.rhap_progress-indicator {
+  @apply bg-white;
+}
