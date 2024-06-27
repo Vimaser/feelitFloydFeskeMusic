@@ -22,28 +22,32 @@ const AdminUpload = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push('/admin/login');
-      }
-    });
+    if (typeof window !== 'undefined') {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          router.push('/admin/login');
+        }
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    }
   }, [router]);
 
   useEffect(() => {
     const fetchUploads = async () => {
-      const musicCollection = collection(db, 'music');
-      const musicSnapshot = await getDocs(musicCollection);
-      const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setUploads(musicList);
+      if (typeof window !== 'undefined') {
+        const musicCollection = collection(db, 'music');
+        const musicSnapshot = await getDocs(musicCollection);
+        const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setUploads(musicList);
 
-      const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
-      if (configDoc.exists()) {
-        const configData = configDoc.data();
-        setSectionTitle(configData.sectionTitle || 'Featured Album');
-        setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
-        setFeaturedImageURL(configData.featuredImageURL || '');
+        const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
+        if (configDoc.exists()) {
+          const configData = configDoc.data();
+          setSectionTitle(configData.sectionTitle || 'Featured Album');
+          setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
+          setFeaturedImageURL(configData.featuredImageURL || '');
+        }
       }
     };
 

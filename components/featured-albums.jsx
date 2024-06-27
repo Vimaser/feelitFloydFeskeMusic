@@ -23,18 +23,20 @@ const FeaturedAlbums = () => {
   useEffect(() => {
     const fetchMusic = async () => {
       try {
-        const musicCollection = collection(db, "music");
-        const musicSnapshot = await getDocs(musicCollection);
-        const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setMusicArray(musicList);
-        setCurrentMusic(musicList[0]);
+        if (typeof window !== 'undefined') {
+          const musicCollection = collection(db, "music");
+          const musicSnapshot = await getDocs(musicCollection);
+          const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setMusicArray(musicList);
+          setCurrentMusic(musicList[0]);
 
-        const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
-        if (configDoc.exists()) {
-          const configData = configDoc.data();
-          setSectionTitle(configData.sectionTitle || 'Featured Album');
-          setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
-          setFeaturedImageURL(configData.featuredImageURL || '/img/home/albums.gif');
+          const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
+          if (configDoc.exists()) {
+            const configData = configDoc.data();
+            setSectionTitle(configData.sectionTitle || 'Featured Album');
+            setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
+            setFeaturedImageURL(configData.featuredImageURL || '/img/home/albums.jpg');
+          }
         }
       } catch (error) {
         console.error("Error fetching music: ", error);

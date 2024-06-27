@@ -18,24 +18,28 @@ const AdminShows = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push('/admin/login');
-      }
-    });
+    if (typeof window !== 'undefined') {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          router.push('/admin/login');
+        }
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    }
   }, [router]);
 
   useEffect(() => {
-    const fetchShows = async () => {
-      const showsCollection = collection(db, 'shows');
-      const showsSnapshot = await getDocs(showsCollection);
-      const showsList = showsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setShows(showsList);
-    };
+    if (typeof window !== 'undefined') {
+      const fetchShows = async () => {
+        const showsCollection = collection(db, 'shows');
+        const showsSnapshot = await getDocs(showsCollection);
+        const showsList = showsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setShows(showsList);
+      };
 
-    fetchShows();
+      fetchShows();
+    }
   }, []);
 
   const handleShowUpload = async (e) => {
