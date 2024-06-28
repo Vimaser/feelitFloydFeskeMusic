@@ -98,7 +98,7 @@ const FeaturedAlbums = () => {
                     </span>
                   </div>
                   {music.imageURL && (
-                    <Image
+                    <img
                       src={music.imageURL}
                       onError={(e) => { e.target.src = '/img/home/default.jpg'; }}
                       className={twMerge(
@@ -126,7 +126,7 @@ const FeaturedAlbums = () => {
             </div>
           </div>
           <div data-aos="fade-up" className="hidden md:block">
-            <Image
+            <img
               src={featuredImageURL}
               onError={(e) => { e.target.src = '/img/home/default.jpg'; }}
               width={400}
