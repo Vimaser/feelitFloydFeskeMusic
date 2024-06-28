@@ -1,13 +1,28 @@
- /* Styles for embla-carousel  */
-.embla_member {
-  overflow: hidden;
+@media (max-width: 768px) {
+  .embla_member {
+    overflow: hidden;
+  }
+  .embla__container_member {
+    display: flex;
+  }
+  .embla__slide_member {
+    flex: 0 0 100%;
+    min-width: 0;
+    flex-basis: 358px;
+  }
 }
-.embla__container_member {
-  display: flex;
-  justify-content: center;
-}
-.embla__slide_member {
-  flex: 0 0 auto;
-  width: 358px;
-  min-width: 0;
+
+@media (min-width: 769px) {
+  .embla_member {
+    overflow: hidden;
+  }
+  .embla__container_member {
+    display: flex;
+    justify-content: center;
+  }
+  .embla__slide_member {
+    flex: 0 0 auto;
+    width: 358px;
+    min-width: 0;
+  }
 }
