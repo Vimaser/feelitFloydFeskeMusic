@@ -23,20 +23,18 @@ const FeaturedAlbums = () => {
   useEffect(() => {
     const fetchMusic = async () => {
       try {
-        if (typeof window !== 'undefined') {
-          const musicCollection = collection(db, "music");
-          const musicSnapshot = await getDocs(musicCollection);
-          const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setMusicArray(musicList);
-          setCurrentMusic(musicList[0]);
+        const musicCollection = collection(db, "music");
+        const musicSnapshot = await getDocs(musicCollection);
+        const musicList = musicSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setMusicArray(musicList);
+        setCurrentMusic(musicList[0]);
 
-          const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
-          if (configDoc.exists()) {
-            const configData = configDoc.data();
-            setSectionTitle(configData.sectionTitle || 'Featured Album');
-            setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
-            setFeaturedImageURL(configData.featuredImageURL || '/img/home/albums.jpg');
-          }
+        const configDoc = await getDoc(doc(db, 'config', 'featuredAlbum'));
+        if (configDoc.exists()) {
+          const configData = configDoc.data();
+          setSectionTitle(configData.sectionTitle || 'Featured Album');
+          setSectionSubtitle(configData.sectionSubtitle || 'Featured Songs');
+          setFeaturedImageURL(configData.featuredImageURL || '/img/home/albums.jpg');
         }
       } catch (error) {
         console.error("Error fetching music: ", error);
@@ -102,11 +100,10 @@ const FeaturedAlbums = () => {
                   {music.imageURL && (
                     <Image
                       src={music.imageURL}
+                      onError={(e) => { e.target.src = '/img/home/default.jpg'; }}
                       className={twMerge(
                         "absolute scale-0 group-hover:scale-100 left-1/3 duration-500 transition-all top-5 md:top-[-40px] rotate-0 w-[13rem] h-[17rem] object-cover",
-                        currentMusic && currentMusic.id === music.id
-                          ? "md:left-2/3 group-hover:rotate-45"
-                          : ""
+                        currentMusic && currentMusic.id === music.id ? "md:left-2/3 group-hover:rotate-45" : ""
                       )}
                       width={220}
                       height={195}
@@ -131,6 +128,7 @@ const FeaturedAlbums = () => {
           <div data-aos="fade-up" className="hidden md:block">
             <Image
               src={featuredImageURL}
+              onError={(e) => { e.target.src = '/img/home/default.jpg'; }}
               width={400}
               height={592}
               alt="albums"
