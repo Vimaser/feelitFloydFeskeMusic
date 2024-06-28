@@ -89,27 +89,27 @@ export const latestBlogPosts = [
 export const testimonials = [
   {
     id:1,
-    name: "John Doe",
+    name: "Dan Broe",
     quote:
-      "If you need to redesign your new project, new visual strategy, ux structure or you do have some cool ideas for collaboration",
-    image: "/img/home/g2.jpg",
-    signature: "John",
+    "...I love, love, love the Website.",
+    image: "https://firebasestorage.googleapis.com/v0/b/danbroemusic-5850c.appspot.com/o/gallery%2FDan%20Promo%20II_Moment.jpg?alt=media&token=8b9a1818-2815-4334-904b-1a3bacf8e973",
+    signature: "Dan",
   },
-  {
+/*   {
     id:2,
-    name: "Jane Smith",
+    name: "Aaron Justice",
     quote:
-      "If you need to redesign your new project, new visual strategy, ux structure or you do have some cool ideas for collaboration",
-    image: "/img/home/g1.jpg",
-    signature: "Jane",
-  },
+    "I now have a website that you can go check out. Just click the link above to visit the website!! And if you’re looking to start your own website, contact Tiger Software Developers!!",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqaCO7O_X1S2iLsI93Gu0h17nESRpWoqNt7g&s",
+    signature: "Aaron",
+  }, */
   {
     id:3,
-    name: "David Brown",
+    name: "Uncle Chess",
     quote:
-      "If you need to redesign your new project, new visual strategy, ux structure or you do have some cool ideas for collaboration",
-    image: "/img/home/m8.jpg",
-    signature: "David",
+    "You guys are awesome!",
+    image: "https://firebasestorage.googleapis.com/v0/b/unclechessmusic.appspot.com/o/gallery%2Fuc2.jpg?alt=media&token=5ac255a0-bd05-4c3a-93ff-0b8de01ef19b",
+    signature: "Chess",
   },
 ];
 //playlist
