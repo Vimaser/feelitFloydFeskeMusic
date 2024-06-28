@@ -50,51 +50,15 @@ export const shows = [
 export const members = [
   {
     id: 1,
-    name: "David Beckham",
-    position: "CEO & Founder",
-    image: "/img/home/m1.jpg",
+    name: "Trei Feske",
+    position: "CEO & Founder || Lead Programmer",
+    image: "https://scontent-atl3-1.xx.fbcdn.net/v/t39.30808-6/294245124_141943671842197_1004517517711554634_n.jpg?stp=cp6_dst-jpg&_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=6C8Gd7uBhIsQ7kNvgH5rzPn&_nc_ht=scontent-atl3-1.xx&oh=00_AYBSiNad_wb2vANXQQITSA_gcLie0qO7M4g6-qeKe8PjTA&oe=6684EE73",
   },
   {
     id: 2,
-    name: "Jennifer Lopez",
-    position: "CCO",
-    image: "/img/home/m2.jpg",
-  },
-  {
-    id: 3,
-    name: "Elon Musk",
-    position: "CTO",
-    image: "/img/home/m3.jpg",
-  },
-  {
-    id: 4,
-    name: "Serena Williams",
-    position: "COO",
-    image: "/img/home/m4.jpeg",
-  },
-  {
-    id: 5,
-    name: "Jeff Bezos",
-    position: "CFO",
-    image: "/img/home/m5.jpg",
-  },
-  {
-    id: 6,
-    name: "Oprah Winfrey",
-    position: "CMO",
-    image: "/img/home/m6.jpeg",
-  },
-  {
-    id: 7,
-    name: "Warren Buffett",
-    position: "CSO",
-    image: "/img/home/m7.jpg",
-  },
-  {
-    id: 8,
-    name: "Adam Gats",
-    position: "CLO",
-    image: "/img/home/m8.jpg",
+    name: "Floyd Feske Jr",
+    position: "Owner & Operating Manager",
+    image: "https://scontent-atl3-2.xx.fbcdn.net/v/t39.30808-6/411321014_369974129039149_5743913256780086704_n.jpg?stp=cp6_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=RkwMGNQ2z8oQ7kNvgGtUnb9&_nc_ht=scontent-atl3-2.xx&oh=00_AYDL1ObL0ly20Qb24OHlwFDttRF2y9d9N20Qd6YZy7cVTw&oe=6685185D",
   },
 ];
 //blog
