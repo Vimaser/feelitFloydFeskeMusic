@@ -3,11 +3,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '../../../firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -17,7 +18,22 @@ const AdminLogin = () => {
       router.push('/admin/upload');
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('Error logging in: ' + error.message);
+      setError('Error logging in: ' + error.message);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setError('Please enter your email address to reset your password.');
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setError('Password reset email sent!');
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      setError('Error sending password reset email: ' + error.message);
     }
   };
 
@@ -25,6 +41,7 @@ const AdminLogin = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-center text-gray-900">Admin Login</h2>
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="rounded-md shadow-sm">
             <div className="mb-4">
@@ -68,6 +85,14 @@ const AdminLogin = () => {
             </button>
           </div>
         </form>
+        <div className="mt-4 text-center">
+          <button
+            onClick={handleForgotPassword}
+            className="text-sm text-blue-600 hover:text-blue-800"
+          >
+            Forgot Password?
+          </button>
+        </div>
       </div>
     </div>
   );
