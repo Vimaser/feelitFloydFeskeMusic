@@ -26,7 +26,7 @@ const Featured = () => {
             className="flex-1 text-center lg:text-start "
           >
             <h2>
-              I'VE COME TO THE<br className="hidden lg:block" />
+              I'VE COME TO THE <br className="hidden lg:block" />
               SHORES OF MY LIFE
             </h2>
             <p className="text-cyan mx-auto lg:mx-0 mt-10 mb-12 max-w-[533px]">

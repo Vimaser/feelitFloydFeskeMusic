@@ -1,19 +1,37 @@
+"use client";
+
+import React, { useEffect, useState } from 'react';
 import Container from "./container";
 import SectionHeading from "./section-heading";
 import { FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
-import { latestBlogPosts } from "@/data/data";
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/firebaseConfig';
+import Link from 'next/link';
 
-//method call 
 const LatestBlogs = () => {
+  const [latestBlogPosts, setLatestBlogPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchLatestBlogs = async () => {
+      const querySnapshot = await getDocs(collection(db, "blogs"));
+      const blogsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Sort the blogs by publish date to get the latest blogs
+      const sortedBlogs = blogsData.sort((a, b) => new Date(b.publishAt) - new Date(a.publishAt));
+      setLatestBlogPosts(sortedBlogs.slice(0, 3)); // Get the latest 3 blogs
+    };
+
+    fetchLatestBlogs();
+  }, []);
+
   return (
-    <div id="blog" className="bg-bg-dark">
+    <div id="blog" className="bg-bg-dark py-10">
       <Container className="py-section">
         <SectionHeading>
-          <h2 className="uppercase text-center">READ OUR LATEST BLOG</h2>
+          <h2 className="uppercase text-center text-4xl font-bold mb-8">READ OUR LATEST BLOG</h2>
         </SectionHeading>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {latestBlogPosts.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))}
@@ -25,34 +43,35 @@ const LatestBlogs = () => {
 
 const BlogCard = ({ blog }) => {
   return (
-    <article
-      data-aos="zoom-in-up"
-      className="flex font-kumbhSans font-normal cursor-pointer group flex-col gap-2"
-    >
-      <div className="w-full transition-all relative  h-[260px] group-hover:h-[370px] duration-500 isolate ">
-        <div className="bg-light-rose z-10 bg-opacity-90 transition-all opacity-0 group-hover:opacity-90 absolute inset-0 grid place-content-center duration-500 p-2">
-          <FaArrowRight className="-rotate-45  text-3xl  group-hover:fill-white transition-all" />
+    <Link href={`/blogs/${blog.id}`} passHref>
+      <article
+        data-aos="zoom-in-up"
+        className="flex font-kumbhSans font-normal cursor-pointer group flex-col gap-2"
+      >
+        <div className="w-full transition-all relative h-[260px] group-hover:h-[370px] duration-500 isolate">
+          <div className="bg-light-rose z-10 bg-opacity-90 transition-all opacity-0 group-hover:opacity-90 absolute inset-0 grid place-content-center duration-500 p-2">
+            <FaArrowRight className="-rotate-45 text-3xl group-hover:fill-white transition-all" />
+          </div>
+          <Image
+            src={blog.image}
+            fill
+            alt={blog.title}
+            className="w-full object-cover"
+          />
         </div>
-        <Image
-          src={blog.image}
-          fill
-          alt={blog.title}
-          className="w-full object-cover"
-        />
-      </div>
-      <div className="p-4">
-        <div className="text-sm text-cyan">
-          {blog.publishAt} _ {blog.category}
+        <div className="p-4">
+          <div className="text-sm text-cyan">
+            {blog.publishAt} &mdash; {blog.category}
+          </div>
+          <h5 className="text-xl font-bold my-4 mb-6 line-clamp-2">
+            {blog.title}
+          </h5>
+          <div className="flex text-cyan text-base font-medium uppercase items-center gap-2 transition-all group-hover:text-rose">
+            Read more
+          </div>
         </div>
-        <h5 className="text-xl font-bold my-4 mb-6 line-clamp-2">
-          {blog.title}
-        </h5>
-
-        <div className="flex text-cyan text-base font-medium uppercase items-center gap-2  transition-all group-hover:text-rose">
-          Read more
-        </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 };
 

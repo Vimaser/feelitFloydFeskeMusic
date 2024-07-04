@@ -29,6 +29,7 @@ const AdminLayout = ({ children }) => {
           <div className="flex space-x-4">
             <Link href="/admin/upload" className="text-gray-300 hover:text-white">Manage Featured Music</Link>
             <Link href="/admin/shows" className="text-gray-300 hover:text-white">Manage Upcoming Shows</Link>
+            <Link href="/admin/blog" className="text-gray-300 hover:text-white">Manage || Write Blog</Link>
             <Link href="/" className="text-gray-300 hover:text-white">Return Home</Link>
           </div>
         </div>

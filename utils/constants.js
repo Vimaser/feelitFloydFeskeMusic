@@ -5,4 +5,5 @@ export const navigationLinks = [
   { id: 5, title: "gallery", route: "#gallery" },
   { id: 7, title: "Shows", route: "#shows" },
   { id: 8, title: "BLOG", route: "#blog" },
+  { id: 8, title: "Login", route: "admin/login" },
 ];
