@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense, useEffect } from 'react';
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
 import "aos/dist/aos.css";
@@ -9,7 +10,6 @@ import Settings from "@/components/Settings";
 import LayoutProvider from "./LayoutProvider";
 import Head from 'next/head';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 import * as gtag from '@/lib/gtag';
 import { metadata } from './metadata';
 
@@ -57,10 +57,12 @@ export default function RootLayout({ children }) {
       >
         <AnimationProvider>
           <LayoutProvider>
-            <div className="layout">
-              <Settings />
-              {children}
-            </div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="layout">
+                <Settings />
+                {children}
+              </div>
+            </Suspense>
           </LayoutProvider>
         </AnimationProvider>
       </body>
