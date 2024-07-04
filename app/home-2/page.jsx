@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import FeaturedGrid from "@/components/featured-grid";
 import Featured from "./_components/featured";
 import FeaturedAlbums from "./_components/featured-albums";
@@ -12,18 +13,21 @@ import FeaturedSongs from "./_components/featured-songs";
 //method call of home-2 page
 const Home2 = () => {
   return (
-    <div className="text-base h-[200vh] text-white">
-      <Header />
-      <Hero />
-      <FeaturedSongs />
-      <LatestAlbums />
-      <FeaturedAlbums />
-      <Featured />
-      <FeaturedGrid />
-      <UpcomingShows />
-      <LatestBlogs />
-      <Footer />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="text-base h-[200vh] text-white">
+        <Header />
+        <Hero />
+        <FeaturedSongs />
+        <LatestAlbums />
+        <FeaturedAlbums />
+        <Featured />
+        <FeaturedGrid />
+        <UpcomingShows />
+        <LatestBlogs />
+        <Footer />
+      </div>
+    </Suspense>
   );
 };
+
 export default Home2;
