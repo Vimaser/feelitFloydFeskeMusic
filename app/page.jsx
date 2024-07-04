@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Featured from "@/components/featured";
@@ -10,20 +11,24 @@ import Testimonials from "@/components/testimonials";
 import LatestBlogs from "@/components/latest-blogs";
 import Footer from "@/components/footer";
 
-export default function Home() {
+const Home = () => {
   return (
-    <main className="bg-bg-dark text-white text-base">
-      <Header />
-      <Hero />
-      <Featured />
-      <NewestAlbums />
-      <UpcomingShows />
-      <FeaturedGrid />
-      <FeaturedAlbums />
-      <Members />
-      <Testimonials />
-      <LatestBlogs />
-      <Footer />
-    </main>
+    <Suspense fallback={<div>Loading...</div>}>
+      <main className="bg-bg-dark text-white text-base">
+        <Header />
+        <Hero />
+        <Featured />
+        <NewestAlbums />
+        <UpcomingShows />
+        <FeaturedGrid />
+        <FeaturedAlbums />
+        <Members />
+        <Testimonials />
+        <LatestBlogs />
+        <Footer />
+      </main>
+    </Suspense>
   );
-}
+};
+
+export default Home;

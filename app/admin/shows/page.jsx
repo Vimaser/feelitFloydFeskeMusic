@@ -1,27 +1,38 @@
 "use client";
 
-import AdminLayout from '../../../components/AdminLayout';
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { auth, storage, db } from '../../../firebaseConfig';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import AdminLayout from "../../../components/AdminLayout";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { auth, storage, db } from "../../../firebaseConfig";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const AdminShows = () => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
   const [imageFile, setImageFile] = useState(null);
-  const [link, setLink] = useState('');
-  const [status, setStatus] = useState('tickets available');
+  const [link, setLink] = useState("");
+  const [status, setStatus] = useState("tickets available");
   const [shows, setShows] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (!user) {
-          router.push('/admin/login');
+          router.push("/admin/login");
         }
       });
 
@@ -30,11 +41,14 @@ const AdminShows = () => {
   }, [router]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const fetchShows = async () => {
-        const showsCollection = collection(db, 'shows');
+        const showsCollection = collection(db, "shows");
         const showsSnapshot = await getDocs(showsCollection);
-        const showsList = showsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const showsList = showsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setShows(showsList);
       };
 
@@ -52,7 +66,7 @@ const AdminShows = () => {
       const imageSnapshot = await uploadBytes(imageRef, imageFile);
       const imageURL = await getDownloadURL(imageSnapshot.ref);
 
-      await addDoc(collection(db, 'shows'), {
+      await addDoc(collection(db, "shows"), {
         title,
         date,
         imageURL,
@@ -60,21 +74,23 @@ const AdminShows = () => {
         status,
       });
 
-      setTitle('');
-      setDate('');
+      setTitle("");
+      setDate("");
       setImageFile(null);
-      setLink('');
-      setStatus('tickets available');
-      alert('Show uploaded successfully!');
+      setLink("");
+      setStatus("tickets available");
+      alert("Show uploaded successfully!");
 
-      const showsCollection = collection(db, 'shows');
+      const showsCollection = collection(db, "shows");
       const showsSnapshot = await getDocs(showsCollection);
-      const showsList = showsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const showsList = showsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setShows(showsList);
-
     } catch (error) {
-      console.error('Error uploading show: ', error);
-      alert('Error uploading show: ' + error.message);
+      console.error("Error uploading show: ", error);
+      alert("Error uploading show: " + error.message);
     }
   };
 
@@ -82,23 +98,28 @@ const AdminShows = () => {
     try {
       const imageRef = ref(storage, imageURL);
       await deleteObject(imageRef);
-      await deleteDoc(doc(db, 'shows', id));
-      setShows(shows.filter(show => show.id !== id));
-      alert('Show deleted successfully!');
+      await deleteDoc(doc(db, "shows", id));
+      setShows(shows.filter((show) => show.id !== id));
+      alert("Show deleted successfully!");
     } catch (error) {
-      console.error('Error deleting show: ', error);
-      alert('Error deleting show: ' + error.message);
+      console.error("Error deleting show: ", error);
+      alert("Error deleting show: " + error.message);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-center text-gray-900">Manage Upcoming Shows</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-900">
+          Manage Upcoming Shows
+        </h2>
         <form className="mt-8 space-y-6" onSubmit={handleShowUpload}>
           <div className="rounded-md shadow-sm">
             <div className="mb-4">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Show Title
               </label>
               <input
@@ -113,7 +134,10 @@ const AdminShows = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Date
               </label>
               <input
@@ -127,7 +151,10 @@ const AdminShows = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="image-file" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="image-file"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Show Image
               </label>
               <input
@@ -141,7 +168,10 @@ const AdminShows = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="link" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="link"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Ticket Link (optional)
               </label>
               <input
@@ -155,7 +185,10 @@ const AdminShows = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Status
               </label>
               <select
@@ -182,12 +215,16 @@ const AdminShows = () => {
           </div>
         </form>
         <div className="mt-8">
-          <h3 className="text-2xl font-bold text-center text-gray-900">Uploaded Shows</h3>
+          <h3 className="text-2xl font-bold text-center text-gray-900">
+            Uploaded Shows
+          </h3>
           <ul>
-            {shows.map(show => (
+            {shows.map((show) => (
               <li key={show.id} className="flex flex-col items-start py-2">
                 <div className="flex justify-between w-full items-center">
-                  <span>{show.title} - {new Date(show.date).toLocaleDateString()}</span>
+                  <span>
+                    {show.title} - {new Date(show.date).toLocaleDateString()}
+                  </span>
                   <button
                     onClick={() => handleDelete(show.id, show.imageURL)}
                     className="text-red-600 hover:text-red-800"
@@ -205,7 +242,12 @@ const AdminShows = () => {
                   )}
                   <span className="text-sm">{show.status}</span>
                   {show.link && (
-                    <a href={show.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 ml-4">
+                    <a
+                      href={show.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 ml-4"
+                    >
                       Buy Tickets
                     </a>
                   )}
@@ -222,7 +264,9 @@ const AdminShows = () => {
 const AdminShowsPage = () => {
   return (
     <AdminLayout>
-      <AdminShows />
+      <Suspense fallback={<div>Loading...</div>}>
+        <AdminShows />
+      </Suspense>
     </AdminLayout>
   );
 };

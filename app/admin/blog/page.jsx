@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { db, storage } from '@/firebaseConfig';
@@ -175,7 +175,9 @@ const AdminBlog = () => {
 const AdminBlogPage = () => {
   return (
     <AdminLayout>
-      <AdminBlog />
+      <Suspense fallback={<div>Loading...</div>}>
+        <AdminBlog />
+      </Suspense>
     </AdminLayout>
   );
 };
