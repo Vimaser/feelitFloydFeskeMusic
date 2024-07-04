@@ -16,9 +16,9 @@ const LatestBlogs = () => {
     const fetchLatestBlogs = async () => {
       const querySnapshot = await getDocs(collection(db, "blogs"));
       const blogsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      // Sort the blogs by publish date to get the latest blogs
+
       const sortedBlogs = blogsData.sort((a, b) => new Date(b.publishAt) - new Date(a.publishAt));
-      setLatestBlogPosts(sortedBlogs.slice(0, 3)); // Get the latest 3 blogs
+      setLatestBlogPosts(sortedBlogs.slice(0, 3));
     };
 
     fetchLatestBlogs();

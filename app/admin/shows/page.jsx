@@ -14,6 +14,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
@@ -26,6 +27,7 @@ const AdminShows = () => {
   const [link, setLink] = useState("");
   const [status, setStatus] = useState("tickets available");
   const [shows, setShows] = useState([]);
+  const [editingShowId, setEditingShowId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -54,40 +56,59 @@ const AdminShows = () => {
 
   const handleShowUpload = async (e) => {
     e.preventDefault();
-    if (!title || !date || !imageFile) return;
+    if (!title || !date || (!imageFile && !editingShowId)) return;
 
-    const imageRef = ref(storage, `shows/${imageFile.name}`);
+    let imageURL = "";
+    if (imageFile) {
+      const imageRef = ref(storage, `shows/${imageFile.name}`);
+      const imageSnapshot = await uploadBytes(imageRef, imageFile);
+      imageURL = await getDownloadURL(imageSnapshot.ref);
+    }
+
+    const showData = {
+      title,
+      date,
+      imageURL: imageURL || (editingShowId ? shows.find(show => show.id === editingShowId).imageURL : ""),
+      link,
+      status,
+    };
 
     try {
-      const imageSnapshot = await uploadBytes(imageRef, imageFile);
-      const imageURL = await getDownloadURL(imageSnapshot.ref);
-
-      await addDoc(collection(db, "shows"), {
-        title,
-        date,
-        imageURL,
-        link,
-        status,
-      });
+      if (editingShowId) {
+        const showDoc = doc(db, "shows", editingShowId);
+        await updateDoc(showDoc, showData);
+        setShows(shows.map(show => (show.id === editingShowId ? { ...show, ...showData } : show)));
+        setEditingShowId(null);
+      } else {
+        await addDoc(collection(db, "shows"), showData);
+        const showsCollection = collection(db, "shows");
+        const showsSnapshot = await getDocs(showsCollection);
+        const showsList = showsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setShows(showsList);
+      }
 
       setTitle("");
       setDate("");
       setImageFile(null);
       setLink("");
       setStatus("tickets available");
-      alert("Show uploaded successfully!");
-
-      const showsCollection = collection(db, "shows");
-      const showsSnapshot = await getDocs(showsCollection);
-      const showsList = showsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setShows(showsList);
+      alert("Show saved successfully!");
     } catch (error) {
-      console.error("Error uploading show: ", error);
-      alert("Error uploading show: " + error.message);
+      console.error("Error saving show: ", error);
+      alert("Error saving show: " + error.message);
     }
+  };
+
+  const handleEdit = (show) => {
+    setTitle(show.title);
+    setDate(show.date);
+    setImageFile(null);
+    setLink(show.link);
+    setStatus(show.status);
+    setEditingShowId(show.id);
   };
 
   const handleDelete = async (id, imageURL) => {
@@ -196,6 +217,8 @@ const AdminShows = () => {
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="tickets available">Tickets Available</option>
+                  <option value="tickets available at the door">Tickets Available At The Door</option>
+                  <option value="free">Free</option>
                   <option value="sold out">Sold Out</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
@@ -227,6 +250,12 @@ const AdminShows = () => {
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete
+                    </button>
+                    <button
+                      onClick={() => handleEdit(show)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
                     </button>
                   </div>
                   <div className="flex items-center">
