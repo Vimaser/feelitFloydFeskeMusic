@@ -6,7 +6,6 @@ import { doc, getDoc, addDoc, collection, query, orderBy, getDocs, deleteDoc } f
 import { db, auth } from '../../../firebaseConfig';
 import Container from '@/components/container';
 import SectionHeading from '@/components/section-heading';
-import Image from 'next/image';
 import Head from 'next/head';
 import { onAuthStateChanged } from 'firebase/auth';
 import { signIn, logOut } from '../../../auth';
@@ -32,6 +31,7 @@ const BlogPostContent = ({ id }) => {
           const blogDoc = await getDoc(doc(db, 'blogs', id));
           if (blogDoc.exists()) {
             setBlog({ id: blogDoc.id, ...blogDoc.data() });
+            console.log('Blog Data:', { id: blogDoc.id, ...blogDoc.data() });
           } else {
             console.error("No such document!");
           }
@@ -145,9 +145,9 @@ const BlogPostContent = ({ id }) => {
           <h2 className="uppercase text-center text-4xl font-bold mb-8">{blog.title}</h2>
         </SectionHeading>
         <div className="flex flex-col items-center">
-          <Image src={blog.image} alt={blog.title} width={800} height={600} className="rounded-lg mb-8 transition-transform transform hover:scale-105" />
+          <img src={blog.image} alt={blog.title} className="rounded-lg mb-8 transition-transform transform hover:scale-105" style={{ width: '800px', height: '600px' }} />
           <div className="text-gray-400 mb-4">
-            {blog.publishAt} &mdash; {blog.category}
+            {new Date(blog.publishAt).toLocaleDateString()} &mdash; {blog.category}
           </div>
           <div className="text-lg leading-relaxed text-gray-300 mb-8">
             {blog.content}
