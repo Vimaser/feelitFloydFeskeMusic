@@ -52,13 +52,13 @@ export const members = [
     id: 1,
     name: "Trei Feske",
     position: "CEO & Founder || Lead Programmer",
-    image: "https://scontent-atl3-1.xx.fbcdn.net/v/t39.30808-6/294245124_141943671842197_1004517517711554634_n.jpg?stp=cp6_dst-jpg&_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=6C8Gd7uBhIsQ7kNvgH5rzPn&_nc_ht=scontent-atl3-1.xx&oh=00_AYBSiNad_wb2vANXQQITSA_gcLie0qO7M4g6-qeKe8PjTA&oe=6684EE73",
+    image: "/img/home/m1.png",
   },
   {
     id: 2,
     name: "Floyd Feske Jr",
     position: "Owner & Operating Manager",
-    image: "https://scontent-atl3-2.xx.fbcdn.net/v/t39.30808-6/411321014_369974129039149_5743913256780086704_n.jpg?stp=cp6_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=RkwMGNQ2z8oQ7kNvgGtUnb9&_nc_ht=scontent-atl3-2.xx&oh=00_AYDL1ObL0ly20Qb24OHlwFDttRF2y9d9N20Qd6YZy7cVTw&oe=6685185D",
+    image: "/img/home/m2.png",
   },
 ];
 //blog
@@ -92,7 +92,7 @@ export const testimonials = [
     name: "Dan Broe",
     quote:
     "...I love, love, love the Website.",
-    image: "https://firebasestorage.googleapis.com/v0/b/danbroemusic-5850c.appspot.com/o/gallery%2FDan%20Promo%20II_Moment.jpg?alt=media&token=8b9a1818-2815-4334-904b-1a3bacf8e973",
+    image: "/img/home/p1.webp",
     signature: "Dan",
   },
 /*   {
@@ -108,7 +108,7 @@ export const testimonials = [
     name: "Uncle Chess",
     quote:
     "You guys are awesome!",
-    image: "https://firebasestorage.googleapis.com/v0/b/unclechessmusic.appspot.com/o/gallery%2Fuc2.jpg?alt=media&token=5ac255a0-bd05-4c3a-93ff-0b8de01ef19b",
+    image: "/img/home/p4.jpg",
     signature: "Chess",
   },
 ];
