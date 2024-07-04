@@ -1,4 +1,5 @@
-import { Suspense } from 'react';
+"use client";
+
 import FeaturedGrid from "@/components/featured-grid";
 import Featured from "./_components/featured";
 import FeaturedAlbums from "./_components/featured-albums";
@@ -9,24 +10,24 @@ import LatestBlogs from "./_components/latest-blogs";
 import Footer from "./_components/footer";
 import LatestAlbums from "./_components/latest-albums";
 import FeaturedSongs from "./_components/featured-songs";
+import { useSearchParams } from 'next/navigation';
 
-//method call of home-2 page
 const Home2 = () => {
+  const searchParams = useSearchParams();
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="text-base h-[200vh] text-white">
-        <Header />
-        <Hero />
-        <FeaturedSongs />
-        <LatestAlbums />
-        <FeaturedAlbums />
-        <Featured />
-        <FeaturedGrid />
-        <UpcomingShows />
-        <LatestBlogs />
-        <Footer />
-      </div>
-    </Suspense>
+    <div className="text-base h-[200vh] text-white">
+      <Header />
+      <Hero />
+      <FeaturedSongs />
+      <LatestAlbums />
+      <FeaturedAlbums />
+      <Featured />
+      <FeaturedGrid />
+      <UpcomingShows />
+      <LatestBlogs />
+      <Footer />
+    </div>
   );
 };
 

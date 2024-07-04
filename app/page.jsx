@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react';
+"use client";
+
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Featured from "@/components/featured";
@@ -10,25 +11,26 @@ import Members from "@/components/members";
 import Testimonials from "@/components/testimonials";
 import LatestBlogs from "@/components/latest-blogs";
 import Footer from "@/components/footer";
+import { useSearchParams } from 'next/navigation';
 
-const Home2 = () => {
+const HomePage = () => {
+  const searchParams = useSearchParams();
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="text-base h-[200vh] text-white">
-        <Header />
-        <Hero />
-        <Featured />
-        <NewestAlbums />
-        <UpcomingShows />
-        <FeaturedGrid />
-        <FeaturedAlbums />
-        <Members />
-        <Testimonials />
-        <LatestBlogs />
-        <Footer />
-      </div>
-    </Suspense>
+    <main className="bg-bg-dark text-white text-base">
+      <Header />
+      <Hero />
+      <Featured />
+      <NewestAlbums />
+      <UpcomingShows />
+      <FeaturedGrid />
+      <FeaturedAlbums />
+      <Members />
+      <Testimonials />
+      <LatestBlogs />
+      <Footer />
+    </main>
   );
 };
 
-export default Home2;
+export default HomePage;
