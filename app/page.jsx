@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Featured from "@/components/featured";
@@ -11,10 +11,10 @@ import Testimonials from "@/components/testimonials";
 import LatestBlogs from "@/components/latest-blogs";
 import Footer from "@/components/footer";
 
-const Home = () => {
+const Home2 = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <main className="bg-bg-dark text-white text-base">
+      <div className="text-base h-[200vh] text-white">
         <Header />
         <Hero />
         <Featured />
@@ -26,9 +26,9 @@ const Home = () => {
         <Testimonials />
         <LatestBlogs />
         <Footer />
-      </main>
+      </div>
     </Suspense>
   );
 };
 
-export default Home;
+export default Home2;
