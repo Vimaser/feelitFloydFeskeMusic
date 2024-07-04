@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { doc, getDoc, addDoc, collection, query, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../../../firebaseConfig';
 import Container from '@/components/container';
@@ -17,6 +17,7 @@ const prohibitedWords = [
 ];
 
 const BlogPostContent = ({ id }) => {
+  const router = useRouter();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState('');
@@ -144,6 +145,12 @@ const BlogPostContent = ({ id }) => {
         <SectionHeading>
           <h2 className="uppercase text-center text-4xl font-bold mb-8">{blog.title}</h2>
         </SectionHeading>
+        <button
+          onClick={() => router.push('/')}
+          className="mb-8 px-4 py-2 rounded-lg bg-gray-800 text-white font-semibold hover:bg-gray-700 transition-colors duration-300"
+        >
+          Back to Home
+        </button>
         <div className="flex flex-col items-center">
           <img src={blog.image} alt={blog.title} className="rounded-lg mb-8 transition-transform transform hover:scale-105" style={{ width: '800px', height: '600px' }} />
           <div className="text-gray-400 mb-4">

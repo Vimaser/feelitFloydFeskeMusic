@@ -24,42 +24,42 @@ const Footer = () => {
           <div className="basis-[250px] mx-auto sm:mx-0 ">
             <div className="grid gap-4 grid-cols-3 ">
               <Image
-                src={"/img/home/g1.jpg"}
+                src={"/img/home/g1.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
                 alt=""
               />
               <Image
-                src={"/img/home/g2.jpg"}
+                src={"/img/home/g2.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
                 alt=""
               />
               <Image
-                src={"/img/home/g4.jpg"}
+                src={"/img/home/g3.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
                 alt=""
               />
               <Image
-                src={"/img/home/g5.jpg"}
+                src={"/img/home/g4.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
                 alt=""
               />
               <Image
-                src={"/img/home/g6.jpg"}
+                src={"/img/home/g5.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
                 alt=""
               />
               <Image
-                src={"/img/home/g8.jpg"}
+                src={"/img/home/g6.png"}
                 width={70}
                 height={70}
                 className="object-cover h-[70px]"
