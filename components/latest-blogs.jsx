@@ -54,14 +54,14 @@ const BlogCard = ({ blog }) => {
           </div>
           <Image
             src={blog.image}
-            fill
+            layout="fill"
             alt={blog.title}
             className="w-full object-cover"
           />
         </div>
         <div className="p-4">
           <div className="text-sm text-cyan">
-            {blog.publishAt} &mdash; {blog.category}
+            {new Date(blog.publishAt).toLocaleDateString()} &mdash; {blog.category}
           </div>
           <h5 className="text-xl font-bold my-4 mb-6 line-clamp-2">
             {blog.title}
