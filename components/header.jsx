@@ -35,14 +35,11 @@ const Header = () => {
             <Link href={link.route}>{link.title}</Link>
           </li>
         ))}
-        <li className="ease-linear duration-300 transition-all hover:text-rose">
-          <Link href="/admin/login">Login</Link>
-        </li>
         <br/>
       </ul>
       <div>
         <div className="hidden lg:flex items-center gap-5">
-          <Link target="_blank" href="https://www.facebook.com">
+          <Link target="_blank" href="https://www.facebook.com/floyd.feske.7/">
             <SocialIcon Icon={FaFacebookF} />
           </Link>
           <Link target="_blank" href="https://twitter.com">
