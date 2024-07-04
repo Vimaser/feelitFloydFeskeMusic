@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Container from "./container";
 import SectionHeading from "./section-heading";
 import { FaArrowRight } from "react-icons/fa6";
-import Image from "next/image";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/firebaseConfig';
 import Link from 'next/link';
@@ -42,21 +41,19 @@ const LatestBlogs = () => {
 };
 
 const BlogCard = ({ blog }) => {
+  console.log('Blog Data:', blog);
+  
   return (
     <Link href={`/blogs/${blog.id}`} passHref>
-      <article
-        data-aos="zoom-in-up"
-        className="flex font-kumbhSans font-normal cursor-pointer group flex-col gap-2"
-      >
+      <article className="flex font-kumbhSans font-normal cursor-pointer group flex-col gap-2">
         <div className="w-full transition-all relative h-[260px] group-hover:h-[370px] duration-500 isolate">
           <div className="bg-light-rose z-10 bg-opacity-90 transition-all opacity-0 group-hover:opacity-90 absolute inset-0 grid place-content-center duration-500 p-2">
             <FaArrowRight className="-rotate-45 text-3xl group-hover:fill-white transition-all" />
           </div>
-          <Image
+          <img
             src={blog.image}
-            layout="fill"
             alt={blog.title}
-            className="w-full object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
         <div className="p-4">
