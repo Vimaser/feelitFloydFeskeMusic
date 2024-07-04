@@ -2,19 +2,28 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { doc, getDoc, addDoc, collection } from 'firebase/firestore';
-import { db } from '@/firebaseConfig';
+import { doc, getDoc, addDoc, collection, query, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
+import { db, auth } from '../../../firebaseConfig';
 import Container from '@/components/container';
 import SectionHeading from '@/components/section-heading';
 import Image from 'next/image';
-import ReCAPTCHA from 'react-google-recaptcha';
 import Head from 'next/head';
+import { onAuthStateChanged } from 'firebase/auth';
+import { signIn, logOut } from '../../../auth';
+
+const allowedUIDs = ['pELVPn2fVjbdeep0qiRC6ul82Uu2', 'OehPWq2ZUBOms4fTQYwEgzvgwNx2'];
+
+const prohibitedWords = [
+  'steakhead', 'fuck', 'fucker', 'shit', 'shitty', 'ass', 'asshole'
+];
 
 const BlogPostContent = ({ id }) => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState('');
-  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [user, setUser] = useState(null);
+  const [lastCommentTime, setLastCommentTime] = useState(null);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -39,21 +48,82 @@ const BlogPostContent = ({ id }) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const commentsRef = collection(db, 'blogs', id, 'comments');
+      const q = query(commentsRef, orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const commentsList = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return { id: doc.id, ...data, createdAt: data.createdAt.toDate() };
+      });
+      setComments(commentsList);
+    };
+
+    fetchComments();
+  }, [id]);
+
+  const containsProhibitedWords = (text) => {
+    const lowerText = text.toLowerCase();
+    return prohibitedWords.some(word => lowerText.includes(word));
+  };
+
   const handleCommentSubmit = async () => {
-    if (!captchaVerified) {
-      alert("Please verify the captcha.");
+    if (!user) {
+      alert("Please sign in to leave a comment.");
       return;
     }
 
+    if (containsProhibitedWords(comment)) {
+      alert("Your comment contains inappropriate language and cannot be submitted.");
+      return;
+    }
+
+    if (lastCommentTime) {
+      const now = new Date();
+      const timeSinceLastComment = now - lastCommentTime;
+      const minInterval = 86400000; // 24 hours in milliseconds
+
+      if (timeSinceLastComment < minInterval) {
+        alert("Please wait 24 hours before posting another comment.");
+        return;
+      }
+    }
+
     try {
-      await addDoc(collection(db, 'blogs', id, 'comments'), {
+      const newComment = {
         content: comment,
         createdAt: new Date(),
-      });
+        user: {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        },
+      };
+      const docRef = await addDoc(collection(db, 'blogs', id, 'comments'), newComment);
+      setComments([{ ...newComment, id: docRef.id }, ...comments]);
       setComment('');
+      setLastCommentTime(new Date());
       alert("Comment submitted successfully!");
     } catch (error) {
       console.error("Error adding comment:", error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await deleteDoc(doc(db, 'blogs', id, 'comments', commentId));
+      setComments(comments.filter(comment => comment.id !== commentId));
+      alert('Comment deleted successfully!');
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      alert('Failed to delete comment');
     }
   };
 
@@ -68,7 +138,7 @@ const BlogPostContent = ({ id }) => {
   return (
     <>
       <Head>
-        <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeklAgqAAAAAF6TQHsWW6LhgnG0XI3Jkd6CSdOV"></script>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       </Head>
       <Container style={{ backgroundColor: "#07072a", color: "white", padding: "2rem" }} className="py-section transition-all duration-300 ease-in-out">
         <SectionHeading>
@@ -91,17 +161,44 @@ const BlogPostContent = ({ id }) => {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
-            <ReCAPTCHA
-              sitekey="YOUR_RECAPTCHA_SITE_KEY"
-              onChange={() => setCaptchaVerified(true)}
-              className="mb-4"
-            />
-            <button
-              onClick={handleCommentSubmit}
-              className="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors duration-300"
-            >
-              Submit Comment
-            </button>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <button
+                onClick={user ? logOut : signIn}
+                className="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors duration-300 mb-4"
+                style={{ marginRight: "1rem" }}
+              >
+                {user ? "Sign Out" : "Sign In with Google"}
+              </button>
+              <button
+                onClick={handleCommentSubmit}
+                className="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors duration-300"
+              >
+                Submit Comment
+              </button>
+            </div>
+            <div className="mt-8">
+              <h3 className="text-2xl font-semibold mb-4">Comments</h3>
+              {comments.length > 0 ? (
+                comments.map((comment) => (
+                  <div key={comment.id} className="mb-4 p-4 bg-gray-800 rounded-lg">
+                    <div className="text-gray-300 mb-2">{comment.content}</div>
+                    <div className="text-gray-500 text-sm">
+                      {comment.user.displayName} - {comment.createdAt.toDateString()}
+                    </div>
+                    {user && (user.uid === comment.user.uid || allowedUIDs.includes(user.uid)) && (
+                      <button
+                        onClick={() => handleDeleteComment(comment.id)}
+                        className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div>No comments yet. Be the first to comment!</div>
+              )}
+            </div>
           </div>
         </div>
       </Container>
