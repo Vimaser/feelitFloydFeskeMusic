@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import from 'next/navigation' instead of 'next/router'
+import React, { useEffect, useState, Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebaseConfig';
 import Container from '@/components/container';
 import SectionHeading from '@/components/section-heading';
 import Image from 'next/image';
 
-const BlogPost = () => {
-  const router = useRouter();
-  const { id } = router.query || {}; // Use optional chaining and default to an empty object
+const BlogPostContent = ({ id }) => {
   const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true); // New state for loading
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -28,13 +26,13 @@ const BlogPost = () => {
         } catch (error) {
           console.error("Error fetching document:", error);
         } finally {
-          setLoading(false); // Set loading to false once fetching is done
+          setLoading(false);
         }
       };
 
       fetchBlog();
     } else {
-      setLoading(false); // Set loading to false if no id
+      setLoading(false);
     }
   }, [id]);
 
@@ -61,6 +59,17 @@ const BlogPost = () => {
         </div>
       </div>
     </Container>
+  );
+};
+
+const BlogPost = () => {
+  const router = useRouter();
+  const { id } = router.query || {};
+
+  return (
+    <Suspense fallback={<div>Loading blog post...</div>}>
+      <BlogPostContent id={id} />
+    </Suspense>
   );
 };
 

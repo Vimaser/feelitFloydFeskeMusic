@@ -45,7 +45,10 @@ const FeaturedAlbums = () => {
   }, []);
 
   return (
-    <section className="relative py-section isolate bg-albums bg-cover bg-no-repeat">
+    <section
+      className="relative py-section isolate bg-cover bg-no-repeat"
+      style={{ backgroundColor: "#07072a" }}
+    >
       <Container className="relative z-20">
         <div className="grid items-center grid-cols-1 md:grid-cols-3 gap-16">
           <div data-aos="fade-up" className="col-span-2">
