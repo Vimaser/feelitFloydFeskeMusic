@@ -16,6 +16,19 @@ const prohibitedWords = [
   'steakhead', 'fuck', 'fucker', 'shit', 'shitty', 'ass', 'asshole'
 ];
 
+const censorWord = (word) => {
+  return '*'.repeat(word.length);
+};
+
+const censorText = (text) => {
+  let censoredText = text;
+  prohibitedWords.forEach((word) => {
+    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    censoredText = censoredText.replace(regex, censorWord(word));
+  });
+  return censoredText;
+};
+
 const BlogPostContent = ({ id }) => {
   const router = useRouter();
   const [blog, setBlog] = useState(null);
@@ -70,18 +83,13 @@ const BlogPostContent = ({ id }) => {
     fetchComments();
   }, [id]);
 
-  const containsProhibitedWords = (text) => {
-    const lowerText = text.toLowerCase();
-    return prohibitedWords.some(word => lowerText.includes(word));
-  };
-
   const handleCommentSubmit = async () => {
     if (!user) {
       alert("Please sign in to leave a comment.");
       return;
     }
 
-    if (containsProhibitedWords(comment)) {
+    if (comment.split(' ').some(word => prohibitedWords.includes(word.toLowerCase()))) {
       alert("Your comment contains inappropriate language and cannot be submitted.");
       return;
     }
@@ -99,7 +107,7 @@ const BlogPostContent = ({ id }) => {
 
     try {
       const newComment = {
-        content: comment,
+        content: censorText(comment),
         createdAt: new Date(),
         user: {
           uid: user.uid,
