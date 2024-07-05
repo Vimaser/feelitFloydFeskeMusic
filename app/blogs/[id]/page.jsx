@@ -12,6 +12,7 @@ import { signIn, logOut } from '../../../auth';
 
 const allowedUIDs = ['pELVPn2fVjbdeep0qiRC6ul82Uu2', 'OehPWq2ZUBOms4fTQYwEgzvgwNx2'];
 
+// Add more as needed (ideally won't have to)
 const prohibitedWords = [
   'steakhead', 'fuck', 'fucker', 'shit', 'shitty', 'ass', 'asshole'
 ];
