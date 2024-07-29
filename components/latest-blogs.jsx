@@ -26,9 +26,11 @@ const LatestBlogs = () => {
   return (
     <div id="blog" className="bg-bg-dark py-10">
       <Container className="py-section">
-        <SectionHeading>
-          <h2 className="uppercase text-center text-4xl font-bold mb-8">READ OUR LATEST BLOG</h2>
-        </SectionHeading>
+        {latestBlogPosts.length > 0 && (
+          <SectionHeading>
+            <h2 className="uppercase text-center text-4xl font-bold mb-8">READ OUR LATEST BLOG</h2>
+          </SectionHeading>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {latestBlogPosts.map((blog) => (
@@ -42,7 +44,7 @@ const LatestBlogs = () => {
 
 const BlogCard = ({ blog }) => {
   console.log('Blog Data:', blog);
-  
+
   return (
     <Link href={`/blogs/${blog.id}`} passHref>
       <article className="flex font-kumbhSans font-normal cursor-pointer group flex-col gap-2">
