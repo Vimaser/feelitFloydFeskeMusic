@@ -5,6 +5,12 @@ import { useRouter } from 'next/navigation';
 import { auth, googleAuthProvider } from '../../../firebaseConfig';
 import { signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signInWithPopup } from 'firebase/auth';
 
+console.log('Admin Email 1:', process.env.NEXT_PUBLIC_ADMIN_EMAIL1);
+console.log('Admin UUID 1:', process.env.NEXT_PUBLIC_ADMIN_UUID1);
+console.log('Admin Email 2:', process.env.NEXT_PUBLIC_ADMIN_EMAIL2);
+console.log('Admin UUID 2:', process.env.NEXT_PUBLIC_ADMIN_UUID2);
+
+
 const adminCredentials = {
   [process.env.NEXT_PUBLIC_ADMIN_EMAIL1]: process.env.NEXT_PUBLIC_ADMIN_UUID1,
   [process.env.NEXT_PUBLIC_ADMIN_EMAIL2]: process.env.NEXT_PUBLIC_ADMIN_UUID2,
