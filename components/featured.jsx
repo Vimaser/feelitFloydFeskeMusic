@@ -36,7 +36,7 @@ const Featured = () => {
             I wanted to paint a picture of the struggles of a real God-fearing man, 
             not just someone who always presents their Sunday best.
             </p>
-            <Link className="font-medium text-rose hover:text-white duration-300 transition-all ease-linear" href="https://www.facebook.com/floyd.feske.7">
+            <Link className="font-medium text-rose hover:text-white duration-300 transition-all ease-linear" href="https://www.facebook.com/profile.php?id=100086972757115">
               MORE ABOUT ME
             </Link>
           </div>
