@@ -37,7 +37,7 @@ const Header = () => {
       </ul>
       <div>
         <div className=" hidden lg:flex items-center gap-5">
-          <Link href="https://www.facebook.com/">
+          <Link href="https://www.facebook.com/profile.php?id=100086972757115">
             <SocialIcon className={"hover:text-lime duration-300 ease-linear transition-all"} Icon={FaFacebookF} />
           </Link>
           <Link href="https://twitter.com/">

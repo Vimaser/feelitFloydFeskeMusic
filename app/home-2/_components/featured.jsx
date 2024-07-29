@@ -33,7 +33,7 @@ const Featured = () => {
             </p>
             <Link
               className="font-medium text-bg-dark hover:text-lime duration-300 transition-all ease-linear"
-              href="/"
+              href="/https://www.facebook.com/profile.php?id=100086972757115"
             >
               MORE ABOUT ME
             </Link>

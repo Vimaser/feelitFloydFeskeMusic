@@ -73,7 +73,7 @@ const Footer = () => {
               <div>NY, USA</div>
 
               <div className="flex pt-4 gap-10">
-                <Link href="https://www.facebook.com/">
+                <Link href="https://www.facebook.com/profile.php?id=100086972757115">
                   <SocialIcon
                     className={"hover:text-lime"}
                     Icon={FaFacebookF}
