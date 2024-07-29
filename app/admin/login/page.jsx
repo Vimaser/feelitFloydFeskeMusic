@@ -6,8 +6,8 @@ import { auth, googleAuthProvider } from '../../../firebaseConfig';
 import { signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signInWithPopup } from 'firebase/auth';
 
 const adminCredentials = {
-  'thfeske@gmail.com': 'pELVPn2fVjbdeep0qiRC6ul82Uu2',
-  'floydfeskemusic@gmail.com': 'OehPWq2ZUBOms4fTQYwEgzvgwNx2'
+  [process.env.NEXT_PUBLIC_ADMIN_EMAIL1]: process.env.NEXT_PUBLIC_ADMIN_UUID1,
+  [process.env.NEXT_PUBLIC_ADMIN_EMAIL2]: process.env.NEXT_PUBLIC_ADMIN_UUID2,
 };
 
 const AdminLogin = () => {
