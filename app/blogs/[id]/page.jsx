@@ -12,7 +12,6 @@ import { signIn, logOut } from '../../../auth';
 
 const allowedUIDs = ['pELVPn2fVjbdeep0qiRC6ul82Uu2', 'OehPWq2ZUBOms4fTQYwEgzvgwNx2'];
 
-// Add more as needed (ideally won't have to)
 const prohibitedWords = [
   'steakhead', 'fuck', 'fucker', 'shit', 'shitty', 'ass', 'asshole'
 ];
@@ -165,9 +164,7 @@ const BlogPostContent = ({ id }) => {
           <div className="text-gray-400 mb-4">
             {new Date(blog.publishAt).toLocaleDateString()} &mdash; {blog.category}
           </div>
-          <div className="text-lg leading-relaxed text-gray-300 mb-8">
-            {blog.content}
-          </div>
+          <div className="text-lg leading-relaxed text-gray-300 mb-8" dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}></div>
           <div className="w-full max-w-2xl">
             <h3 className="text-2xl font-semibold mb-4">Leave a Comment</h3>
             <textarea

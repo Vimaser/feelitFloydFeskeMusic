@@ -145,7 +145,7 @@ const AdminBlog = () => {
           <li key={blog.id} className="blog-list-item">
             <div>
               <h3 className="font-bold">{blog.title}</h3>
-              <p>{blog.content}</p>
+              <div dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }} />
               {blog.image && <img src={blog.image} alt={blog.title} className="w-20 h-20 object-cover mt-2" />}
               <div className="social-buttons">
                 <FacebookShareButton url={blog.image} quote={blog.title} className="mr-2">
