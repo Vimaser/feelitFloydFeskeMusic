@@ -12,7 +12,7 @@ import Members from "@/components/members";
 import Testimonials from "@/components/testimonials";
 import LatestBlogs from "@/components/latest-blogs";
 import Footer from "@/components/footer";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { metadata } from './metadata';
 import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
