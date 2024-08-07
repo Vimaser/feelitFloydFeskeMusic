@@ -45,14 +45,14 @@ export default function RootLayout({ children }) {
   const currentMetadata = {
     title: metadata.title,
     description: metadata.description,
-    url: `https://www.floydfeske.com${pathname}${searchParams.toString() ? '?' + searchParams.toString() : ''}`,
-    image: "https://www.floydfeske.com/images/cover.jpg"
+    url: metadata.url + `${pathname}${searchParams.toString() ? '?' + searchParams.toString() : ''}`,
+    image: metadata.image
   };
 
   if (latestBlogPosts.length > 0 && pathname.includes('/blogs/')) {
     const currentBlog = latestBlogPosts.find(blog => `/blogs/${blog.id}` === pathname);
     if (currentBlog) {
-      currentMetadata.title = currentBlog.title;
+      currentMetadata.title = `${currentBlog.title} - Floyd Feske Music`;
       currentMetadata.description = currentBlog.description || currentBlog.content.substring(0, 160);
       currentMetadata.image = currentBlog.image || currentMetadata.image;
     }
