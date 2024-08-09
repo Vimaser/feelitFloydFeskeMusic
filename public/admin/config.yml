@@ -1,0 +1,25 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/img/uploads"
+public_folder: "/img/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Meta Title", name: "meta_title", widget: "string" }
+      - { label: "Meta Description", name: "meta_description", widget: "text" }
+      - { label: "Canonical URL", name: "canonical_url", widget: "string" }
+      - { label: "OG Title", name: "og_title", widget: "string" }
+      - { label: "OG Description", name: "og_description", widget: "text" }
+      - { label: "OG Image", name: "og_image", widget: "image" }
+      - { label: "Twitter Title", name: "twitter_title", widget: "string" }
+      - { label: "Twitter Description", name: "twitter_description", widget: "text" }
+      - { label: "Twitter Image", name: "twitter_image", widget: "image" }
+      - { label: "Structured Data", name: "structured_data", widget: "code", default: "" }

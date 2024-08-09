@@ -77,6 +77,10 @@ export default function RootLayout({ children }) {
           }}
         />
 
+        {/* Test Meta Data */}
+        <title>Test Meta Title - Floyd Feske Music</title>
+        <meta name="description" content="This is a test meta description for Floyd Feske Music." />
+
         {/* SEO Meta Tags */}
         <title>{currentMetadata.title}</title>
         <meta name="description" content={currentMetadata.description} />

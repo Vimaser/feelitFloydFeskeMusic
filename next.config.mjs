@@ -1,12 +1,26 @@
+import withSerwistInit from '@serwist/next';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['firebasestorage.googleapis.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        pathname: '/**',
+      },
+    ],
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
 };
 
-export default nextConfig;
+const withPWA = withSerwistInit({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
+});
+
+export default withPWA(nextConfig);

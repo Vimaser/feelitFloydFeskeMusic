@@ -13,7 +13,7 @@ module.exports = {
         signature: ["var(--font-signature)"],
       },
       colors: {
-        rose: "#f33274", // Adjust color names as needed for clarity
+        rose: "#f33274",
         "light-rose": "#ea3c7a",
         "bg-dark": "#06062a",
         "bg-overly": "#090e38",
