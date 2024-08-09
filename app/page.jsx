@@ -51,6 +51,8 @@ const HomePage = () => {
     }
   }
 
+  console.log(currentMetadata);
+
   return (
     <>
       <Head>

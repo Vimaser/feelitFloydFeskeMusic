@@ -7,9 +7,9 @@ const HomePageWrapper = ({ metadata }) => {
   return (
     <>
       <Head>
-        <title>{metadata.meta_title || 'Default Title'}</title>
+        <title>{metadata.meta_title || 'Floyd Feske Music'}</title>
         <meta name="description" content={metadata.meta_description || 'Default Description'} />
-        <link rel="canonical" href={metadata.canonical_url || 'https://www.example.com'} />
+        <link rel="canonical" href={metadata.canonical_url || 'https://www.floydfeskemusic.com'} />
 
         <meta property="og:title" content={metadata.og_title || 'Default OG Title'} />
         <meta property="og:description" content={metadata.og_description || 'Default OG Description'} />
@@ -35,7 +35,7 @@ const HomePageWrapper = ({ metadata }) => {
 };
 
 export async function getStaticProps() {
-  const metadata = getPageMetadata('home'); // Adjust 'home' to your page's slug or filename
+  const metadata = getPageMetadata('home');
 
   return {
     props: {
